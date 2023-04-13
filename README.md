@@ -11,7 +11,7 @@ Or just sync the gradle files and click on the green play button in Android Stud
 
 # Architecture 
 
-It is a domain driven architecture even though the business layout doesn't have that much login, I design it that way thinking about how this kind of application could evolve over time. A business layer will be useful to isolate business logic and reduce complexity of the `ViewModel` since they already have a lot of UI logic to take care of.  
+It is a domain driven architecture. Even though the business layout doesn't have that much login, I design it that way thinking about how this kind of application could evolve over time. A business layer will be useful to isolate business logic and reduce complexity of the `ViewModel` since they already have a lot of UI logic to take care of.  
 
 The structure of the app applies reactive principles in some parts supported by `Flow` and Coroutines. They mostly run on the main thread, even asynchronous calls, given that unlike threads, the suspending blocks don't affect the main thread performace that much if they are short tasks and tha was the case, so not any other dispatchers were used, and the scope always was `ViewModelsScope` to guarantee cancelation according to the `ViewModel` lifecycle. The `Exceptions` and other controlled errors are passed from the data layer to the UI and each layer has the responsibility to map those error according to certain rules and decide if it needs to be showed to the user or just log internally. I didn’t implement the error management for all the cases and all the layers but the implemented squeme shows how it could be managed and scaled by adding the corresponding mapper on each layer.  
 
@@ -26,17 +26,19 @@ It uses a repository, but it isn't using the repository pattern, (it doesn't hav
 
 ## Domain Business Rules 
 
-This will be (at least in theory because it depends on the app) the layer less modified over time, so it is convenient to have it completely isolated without any dependence to other layer. It contains all the business logic. On real life apps I’ve found this layer very useful to avoid mixing UI login with business logic causing big and complex view models. In this case, it was not necessary (all of them are just short functions calling a repository function and some mappers were omitted) but I use this approach assuming the app will grow over time. 
+This will be (at least in theory because it depends on the app) the less updated layer over time, so it is convenient to have the `Repository` which it depends directly on completely isolated without any references to it. 
+
+It contains all the business logic. For actual production apps, I’ve found this layer very useful to avoid mixing UI login with business logic causing big and complex view models. In this case, it was not necessary (all of them are just short functions calling a repository function and some mappers were omitted) but I use this approach assuming the app will grow over time. 
 
 ## Presentation
 
 ### Viewmodels 
 
-I use MVVM using Coroutines, Flow and Livedata to deliver the state to the UI. The Viewmodels manage the views state, but unlike other designs, they don't have any references to them and that's very helpful for testability (I added a few unit tests to the getPost function where using dependency injection as a complement made easy to generate input and read the outputs without requiring any UI Android framework component nor complex configuration or logic). It uses the observer pattern taking advantage of the Livedata class properties. It is lifecycle aware and was built to work in conjunction with Viewmodels to survive different lifecycle changes to the activities and fragments involved. There are other approaches using Flow, but I have found the lifecycle management is more clear, simple and easy to use. 
+I use MVVM using Coroutines, `Flow` and `Livedata` to deliver the state to the UI. The Viewmodels manage the views state, but unlike other designs, they don't have any references to them and that's very helpful for testability (I added a few unit tests to the `getPost()` function where using dependency injection as a complement made easy to generate input and read the outputs without requiring any UI Android framework component nor complex configuration or logic). It uses the observer pattern taking advantage of the Livedata class properties. It is lifecycle aware and was built to work in conjunction with `Viewmodels` to survive different lifecycle changes to the activities and fragments involved. There are other approaches using Flow, but I have found the lifecycle management is more clear, simple and easy to use. 
 
 ### UI 
 
-I use an “activity with several fragment” structure using the Jetpack Navigation library. It simplifies the fragment stack management and the use of shared data, as well as other useful features like navigation bar integration. I wanted to use pagination at first but the API just return 100 items and it doesn't provide enough features. Using MVVM and the `Viewmodel` as state containers, the `Fragment`'s are very symple. They just render the state objects. 
+I use an “activity with several fragment” structure using the Jetpack `Navigation` library. It simplifies the fragment stack management and the use of shared data, as well as other useful features like navigation bar integration. I wanted to use pagination at first but the API just return 100 items and it doesn't provide enough features. Using MVVM and the `Viewmodel` as state containers, the `Fragment`'s are very symple. They just render the state objects. 
 
 The details `Fragment` gets the information from two different reactive streams of data, so it manages the post-user section and the comment section independently, considering that the data corresponding to the details is stored on demand instead of all at once and it also needs different endpoints to get the information. The post list fragment (star point of the app) obtains the data mainly from the reactive stream coming from the updates to the source of truth, which is a sqlite table corresponding to the Post entity. 
 
