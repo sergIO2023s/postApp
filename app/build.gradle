@@ -1,0 +1,90 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.google.devtools.ksp'
+
+}
+
+android {
+    namespace 'com.example.postapp'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.postapp"
+        minSdk 26
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+
+}
+
+ext {
+    koinVersion = '3.4.0'
+    room_version = "2.5.1"
+    retrofitVersion = "2.9.0"
+    navigationPackVersion = "2.5.3"
+    swipeRefreshVersion = "1.1.0"
+    testCoroutinesVersion = "1.6.4"
+    coreTestingAndroidXVersion = "2.2.0"
+    mockitoVersion = "4.8.0"
+
+}
+
+dependencies {
+
+
+    ksp "androidx.room:room-compiler:$room_version"
+
+    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+
+    implementation "io.insert-koin:koin-core:$koinVersion"
+    implementation "io.insert-koin:koin-android:$koinVersion"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationPackVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationPackVersion"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$navigationPackVersion"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshVersion"
+
+    //Test tools
+    testImplementation "io.insert-koin:koin-test:$koinVersion"
+    testImplementation "io.insert-koin:koin-test-junit4:$koinVersion"
+    testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$testCoroutinesVersion"
+    testImplementation "androidx.arch.core:core-testing:$coreTestingAndroidXVersion"
+
+}

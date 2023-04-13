@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+<ProgressBar
+    android:id="@+id/progressBarPostDetails"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:indeterminate="true"
+    android:visibility="visible"
+    android:layout_marginTop="20dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+<TextView
+    android:id="@+id/txtDetailsPostLabel"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:textSize="24sp"
+    android:text="Description"
+    android:layout_marginStart="12dp"
+    android:textStyle="bold|italic"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+<TextView
+    android:id="@+id/txtDetailsPostTitle"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="12dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/txtDetailsPostLabel" />
+
+<TextView
+    android:id="@+id/txtDetailsPostContent"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="12dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/txtDetailsPostTitle" />
+
+<TextView
+    android:id="@+id/txtDetailsUserLabel"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:textSize="24sp"
+    android:textStyle="bold|italic"
+    android:layout_marginStart="12dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/txtDetailsPostContent"
+    android:text="User "/>
+
+<TextView
+    android:id="@+id/txtDetailsUserName"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="12dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/txtDetailsUserLabel" />
+
+<TextView
+    android:id="@+id/txtDetailsUserEmail"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="12dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/txtDetailsUserName" />
+
+<TextView
+    android:id="@+id/txtDetailsCommentLabel"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:textSize="24sp"
+    android:text="Comments"
+    android:layout_marginStart="12dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/txtDetailsUserEmail" />
+<ProgressBar
+    android:id="@+id/progressBarCommentsDetails"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="100dp"
+    android:indeterminate="true"
+    android:visibility="visible"
+    android:layout_marginTop="20dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent" />
+
+<ListView
+    android:id="@+id/listViewDetailsComments"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:paddingBottom="30dp"
+    app:layout_constraintTop_toBottomOf="@+id/txtDetailsCommentLabel"
+    app:layout_constraintBottom_toBottomOf="parent"></ListView>
+</androidx.constraintlayout.widget.ConstraintLayout>
