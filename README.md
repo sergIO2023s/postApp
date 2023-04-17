@@ -11,11 +11,11 @@ Or just sync the gradle files and click on the green play button in Android Stud
 
 # Architecture
 
-It is a domain-driven architecture. Even though the business layout doesn't have that much login, I design it that way thinking about how this kind of application could evolve over time. A business layer will be useful for isolating business logic and reduce the complexity of the `ViewModel`s since they already have a lot of UI logic to take care of.
+It is a domain-driven architecture. Even though the business layout doesn't have that much login, I design it that way thinking about how this kind of application could evolve over time. A business layer will be useful for isolating business logic and reducing the complexity of the `ViewModel`s since they already have a lot of UI logic to take care of.
 
 The structure of the app applies reactive principles in some parts supported by `Flow` and Coroutines. They mostly run on the main thread, even asynchronous calls, given that, unlike threads, the suspending blocks don't affect the main thread performance that much if they are short tasks and that was the case, so not any other dispatchers were used, and the scope always was `ViewModelsScope` to guarantee cancelation according to the `ViewModel` lifecycle. The `Exceptions` and other controlled errors are passed from the data layer to the UI and each layer has the responsibility to map those error according to certain rules and decide if it needs to be shown to the user or just logged internally. I didn’t implement the error management for all the cases and all the layers but the implemented scheme shows how it could be managed and scaled by adding the corresponding mapper on each layer.
 
-The post details fragment where the user can see a post details has two sections. The user and post information are located in the first section and the comments (which have to be downloaded using another end-point) are in the second and they are downloaded independently. This reactive approach allows the user to see the information as soon as it is available, and each section reacts to the stream of items showing immediately its update state instead of downloading both of them, maybe merging the data and then showing it to the user.
+The fragment where the user can see the details has two sections. The user and post information are located in the first section and the comments (which have to be downloaded using another end-point) are in the second and they are downloaded independently. This reactive approach allows the user to see the information as soon as it is available, and each section reacts to the stream of items showing immediately its update state instead of downloading both of them, maybe merging the data and then showing it to the user.
 
 The application has 3 layers and applies certain Clean Architecture principles. But, having into account the limited time, the extent, and the size of this test, it has some simplifications. It applies the dependency inversion pattern to isolate the repository from the business layer, but I decided to reuse some of the entities as immutable objects for the business layer to avoid a lot of mappers and boilerplate code that may be necessary for a real-world app to guarantee the appropriate dependency relationships. If the app were to scale, it will be convenient to isolate the layers completely, but of course having into account constraints (business requirement, time, resources, etc)
 
@@ -77,6 +77,6 @@ If you want to add a post to your favorite, you just have to tap on the right si
 
 Use the drag gesture from left to right to delete the post from the posts list
 
-### Delete all post but favorites 
+### Delete all posts but favorites 
 
 Use the floating button located in the bottom right corner. All the posts will be deleted with or without an internet connection. All the favorites won't be deleted.
